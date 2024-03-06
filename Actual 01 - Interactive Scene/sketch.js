@@ -6,6 +6,8 @@ function setup() {
 let apple = 0;
 let appleY = 160;
 let Newton = 0;
+let baseWidth = 200;
+let baseHeight = 200;
 
 function drawTrunk() {
   fill(123,63,0);
@@ -28,27 +30,37 @@ function drawGround() {
 }
 
 function drawNewton(newtonState) {
+  if (newtonState === 1) {
+    baseWidth++;
+  }
   strokeWeight(0);
   fill(255, 206, 180);
-  circle(width/2, height/2+20, 25);
+  circle(baseWidth, baseHeight+20, 25);
   fill(255,255,255);
-  circle(width/2+21, height/2+27, 20);
-  circle(width/2+21, height/2+16, 20);
-  circle(width/2+15, height/2+4, 20);
-  circle(width/2, height/2-1, 20);
-  circle(width/2-15, height/2+4, 20);
-  circle(width/2-21, height/2+16, 20);
-  circle(width/2-21, height/2+27, 20);
+  circle(baseWidth+21, baseHeight+27, 20);
+  circle(baseWidth+21, baseHeight+16, 20);
+  circle(baseWidth+15, baseHeight+4, 20);
+  circle(baseWidth, baseHeight-1, 20);
+  circle(baseWidth-15, baseHeight+4, 20);
+  circle(baseWidth-21, baseHeight+16, 20);
+  circle(baseWidth-21, baseHeight+27, 20);
   /*circle(width/2+17, height/2+20, 15);
   circle(width/2+16, height/2+15, 15);
   circle(width/2+15, height/2+12, 15);*/
   stroke(0);
   strokeWeight(3);
-  line(width/2, height/2+32.5, width/2, height/2+75);
-  line(width/2, height/2+75, width/2+25, height/2+100);
-  line(width/2, height/2+75, width/2-25, height/2+100);
-  line(width/2, height/2+40, width/2+20, height/2+70);
-  line(width/2, height/2+40, width/2-20, height/2+70);
+  line(baseWidth, height/2+32.5, baseWidth, height/2+75);
+  //legs
+  if (newtonState === 0) {
+    line(baseWidth, baseHeight+75, baseWidth+25, baseHeight+100);
+    line(baseWidth, baseHeight+75, baseWidth-25, baseHeight+100);
+  }
+  else {
+    
+  }
+  //arms
+  line(baseWidth, height/2+40, baseWidth+20, height/2+70);
+  line(baseWidth, height/2+40, baseWidth-20, height/2+70);
 }
 
 function draw() {
@@ -78,9 +90,11 @@ function draw() {
     strokeWeight(3);
     line(width/2, appleY-7.5, width/2+5, appleY-10);
   }
-  drawNewton();
+  drawNewton(Newton);
 }
 
 function mousePressed() {
-  apple = 1;
+  if (apple === 0) {
+    apple = 1;
+  }
 }
