@@ -49,18 +49,19 @@ function drawNewton(newtonState) {
   circle(width/2+15, height/2+12, 15);*/
   stroke(0);
   strokeWeight(3);
-  line(baseWidth, height/2+32.5, baseWidth, height/2+75);
+  line(baseWidth, baseHeight+32.5, baseWidth, baseHeight+75);
   //legs
   if (newtonState === 0) {
     line(baseWidth, baseHeight+75, baseWidth+25, baseHeight+100);
     line(baseWidth, baseHeight+75, baseWidth-25, baseHeight+100);
   }
   else {
-    
+    line(baseWidth, baseHeight+75, baseWidth+20, baseHeight + 105);
+    line(baseWidth, baseHeight+75, baseWidth-20, baseHeight + 105);
   }
   //arms
-  line(baseWidth, height/2+40, baseWidth+20, height/2+70);
-  line(baseWidth, height/2+40, baseWidth-20, height/2+70);
+  line(baseWidth, baseHeight+40, baseWidth+20, baseHeight+70);
+  line(baseWidth, baseHeight+40, baseWidth-20, baseHeight+70);
 }
 
 function draw() {
@@ -84,6 +85,7 @@ function draw() {
     else {
       apple = 2;
       Newton = 1;
+      baseHeight -= 20;
     }
     circle(width/2, appleY, 15);
     stroke(0);
