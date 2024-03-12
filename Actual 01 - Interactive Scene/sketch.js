@@ -2,6 +2,7 @@ function setup() {
   createCanvas(400, 400);
   rectMode(CENTER);
 }
+//global variables
 
 let apple = 0;
 let appleY = 160;
@@ -9,15 +10,17 @@ let Newton = 0;
 let baseWidth = 200;
 let baseHeight = 200;
 
+//drawing the scene functions
+
 function drawTrunk() {
   fill(123,63,0);
+  noStroke();
   rect(width/2,height/2+20,25,110);
 }
 
 function drawTreeLeaves() {
   fill(34, 139, 34);
-  stroke(34, 139, 34);
-  strokeWeight(0);
+  noStroke(); 
   circle(width/2-15, height/2-40, 50);
   circle(width/2-15, height/2-70, 50);
   circle(width/2+15, height/2-40, 50);
@@ -26,14 +29,16 @@ function drawTreeLeaves() {
 
 function drawGround() {
   fill(79, 121, 66);
+  noStroke();
   rect(width/2, height/2 + 137, 400, 125);
 }
 
-function drawNewton(newtonState) {
+function drawNewton(newtonState) { 
+  //if newtonState is 0, Newton is drawn sitting and otherwise it draws him walking away by modifying baseWidth each time the function runs.
   if (newtonState === 1) {
     baseWidth++;
   }
-  strokeWeight(0);
+  noStroke();
   fill(255, 206, 180);
   circle(baseWidth, baseHeight+20, 25);
   fill(255,255,255);
@@ -65,11 +70,13 @@ function drawNewton(newtonState) {
 }
 
 function draw() {
+  //calls all the functions and draws the background
   background(135, 206, 235);
-  strokeWeight(0);
   drawGround();
   drawTrunk();
   drawTreeLeaves();
+  //if apple is 0, the apple is drawn in the tree. if it's 1, the apple is drawn falling by modifying appleY each frame.
+  //once it hits Newton's hair, the apple vanishes and Newton is changed to 1, which in turn makes newtonState = 1.
   if (apple === 0) {
     fill(210, 43, 43);
     circle(width/2, height/2-40, 15);
@@ -93,10 +100,25 @@ function draw() {
     line(width/2, appleY-7.5, width/2+5, appleY-10);
   }
   drawNewton(Newton);
+  if (Newton === 1) {
+    text("and so he left to discover\nwhat brought the apple to his head", width/2-185, height/2);
+  }
+  text("By: Treydon Olfert\nType r to reset.", 0, height-20);
 }
 
+//functions for when r is typed or when the mouse is clicked
 function mousePressed() {
   if (apple === 0) {
     apple = 1;
+  }
+}
+
+function  keyTyped() {
+  if (key === 'r') {
+    Newton = 0;
+    apple = 0;
+    appleY = 160;
+    baseHeight = 200;
+    baseWidth = 200;
   }
 }
