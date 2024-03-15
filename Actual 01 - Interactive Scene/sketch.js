@@ -42,7 +42,7 @@ function drawGround() {
 
 function drawApple(appleState) {
   //if apple is 0, the apple is drawn in the tree. if it's 1, the apple is drawn falling by modifying appleY each frame.
-  //once it hits Newton's hair, the apple vanishes and Newton is changed to 1, which in turn makes newtonState = 1.
+  //once it hits Newton's hair, the apple vanishes with apple = 2 and Newton is changed to 1, which in turn makes newtonState = 1.
   if (appleState === 0) {
     fill(210, 43, 43);
     circle(width/2, height/2-40, 15);
@@ -73,8 +73,10 @@ function drawNewton(newtonState) {
     baseWidth++;
   }
   noStroke();
+  //head
   fill(255, 206, 180);
   circle(baseWidth, baseHeight+20, 25);
+  //hair
   fill(255,255,255);
   circle(baseWidth+21, baseHeight+27, 20);
   circle(baseWidth+21, baseHeight+16, 20);
@@ -85,8 +87,9 @@ function drawNewton(newtonState) {
   circle(baseWidth-21, baseHeight+27, 20);
   stroke(0);
   strokeWeight(3);
+  //body
   line(baseWidth, baseHeight+32.5, baseWidth, baseHeight+75);
-  //legs
+  //legs - redrawn with same slope as his arms when he stands
   if (newtonState === 0) {
     line(baseWidth, baseHeight+75, baseWidth+25, baseHeight+100);
     line(baseWidth, baseHeight+75, baseWidth-25, baseHeight+100);
@@ -119,6 +122,7 @@ function draw() {
   drawTreeLeaves();
   drawApple(apple);
   drawNewton(Newton);
+  //Text uses same stroke from drawing Newton because it looks good
   if (Newton === 1) {
     text("and so he left to discover\nwhat brought the apple to his head", width/2-185, height/2);
   }
@@ -135,8 +139,8 @@ function mousePressed() {
   }
 }
 
-function  keyTyped() {
-  if (key === 'r') {
+function  keyTyped() { 
+  if (key === 'r') { //identical to top of program with initial global variable values
     currentBack = 0;
     Newton = 0;
     apple = 0;

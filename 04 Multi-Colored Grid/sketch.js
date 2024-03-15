@@ -2,17 +2,30 @@
 // Treydon Olfert
 // March 1st, 2024
 //
-let size = 20;
+let size;
 let initial = 1;
+let currentFactor = 0;
+let factors = [];
 let randomColor;
 let r; let g; let b;
 //for future me, make which RGB value is randomly selected for each square then randomize the other 2 and use those for every square and only randomize the third value
 
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(275, 275);
   document.addEventListener("contextmenu", event => event.preventDefault())
+  findFactors();
   drawGrid();
 }
+
+function findFactors() {
+  for (let i = 2; i < width; i++) {
+    if (width % i === 0) {
+      factors.push(i);
+    }
+  }
+  size = factors[factors.length-1]; 
+}
+//width or height % size == 0
 
 function colorScheme() {
   if (initial === 1) {
@@ -59,15 +72,20 @@ function drawGrid() {
 
 function mousePressed() {
   if (mouseButton === LEFT) {
-    if (size !== 2) {
-      size--;
+    if (currentFactor !== 0) {
+      currentFactor--;
+      print(currentFactor);
+      size = factors[currentFactor];
       drawGrid();
     }
   }
   else if (mouseButton === RIGHT) {
     if (size !== 500) {
-      size++;
-      drawGrid();
+      if (currentFactor !== factors.length - 1) {
+        currentFactor++;
+        size = factors[currentFactor];
+        drawGrid();
+      }
     }
   }
   print(size);
