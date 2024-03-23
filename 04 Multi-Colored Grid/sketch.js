@@ -3,10 +3,12 @@
 // March 1st, 2024
 // Semi-randomly colored grid that can be modified
 
-// Left click - increase size
-// Right click - decrease size
-// Any key - redraw colors of squares
-// ENTER - change and redraw color scheme of squares
+/*
+ Left click - increase size
+ Right click - decrease size
+ Any key - redraw colors of squares
+ ENTER - change and redraw color scheme of squares
+*/
 
 //global variables
 
@@ -30,8 +32,13 @@ function findFactors() { //finds factors of the side length of the square canvas
       factors.push(i);
     }
   }
-  currentFactor = factors.length-1
-  size = factors[currentFactor]; 
+  if (factors.length === 0) { //in the case that the side length is prime, it simply draws one square and doesn't scale
+    size = width; 
+  }
+  else {
+    currentFactor = factors.length-1
+    size = factors[currentFactor];
+  } 
 }
 
 
@@ -66,7 +73,7 @@ function colorScheme() { //chooses 3 random numbers for RGB, but from then on on
   }
 }
 
-function drawGrid() { //draws square grid with nested loop and runs colorScheme() for fill()
+function drawGrid() { //draws square grid with nested loop and runs colorScheme() for fill color
   for (let x = 0; x < width; x += size) {
     for (let y = 0; y < height; y += size) {
       colorScheme();
@@ -77,14 +84,14 @@ function drawGrid() { //draws square grid with nested loop and runs colorScheme(
 
 function mousePressed() { //cycles through factors found from findFactors() to resize the grid
   if (mouseButton === LEFT) {
-    if (currentFactor !== 0) {
+    if (currentFactor !== 0 && factors.length !== 0) {
       currentFactor--;
       size = factors[currentFactor];
       drawGrid();
     }
   }
   else if (mouseButton === RIGHT) {
-    if (currentFactor !== factors.length - 1) {
+    if (currentFactor !== factors.length - 1 && factors.length !== 0) {
       currentFactor++;
       size = factors[currentFactor];
       drawGrid();
@@ -99,5 +106,5 @@ function keyPressed() { //changes color scheme if enter is pressed, otherwise ju
   drawGrid();
 }
 
-function draw() { //unused :(
+function draw() { //unused
 }
