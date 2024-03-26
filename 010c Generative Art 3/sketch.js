@@ -26,7 +26,7 @@ function randomElement(currentLen) {
 
 function draw() {
   translate(width/2,height/2);
-  for(let i = 0; i < 1e7; i++) {
+  for(let i = 0; i < 1e3; i++) {
     randomElement(75);
   }
 }
