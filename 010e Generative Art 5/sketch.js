@@ -11,13 +11,17 @@ let y = 50;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-}
-
-function draw() {
-
-  while (x < width-20) {
-    point(x,50+sin(frequency*x)); //try drawing line connecting dots
-    x++;
-    frequency += 0.001;
+  strokeWeight(2);
+  for (let i = 0; i < 90; i++) {
+    x = 20;
+    frequency = 1;
+    while (x < width - 20) {
+      let mappedX = map(x, 20, width - 20, 0, 1.5 * PI);
+      y = map(i,0,89,50,height-50) + 20 * sin(frequency * mappedX);
+      point(x, y);
+      x++;
+      frequency += 0.01;
+    }
   }
 }
+
