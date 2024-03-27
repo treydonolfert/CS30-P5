@@ -1,27 +1,22 @@
-// Project Title
-// Your Name
-// Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// Ninety Parallel Sinusoids Recreation
+// Treydon Olfert
+// March 27, 2024
+// Using points to draw ninety parallel sinusoids with linearly increasing period
 
-let frequency = 1;
-let x = 20;
-let y = 50;
+
+//global variable - amplitude of sine wave
+let amplitude = 20;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight); //should work with most canvas sizes
   strokeWeight(2);
   for (let i = 0; i < 90; i++) {
-    x = 20;
-    frequency = 1;
-    while (x < width - 20) {
-      let mappedX = map(x, 20, width - 20, 0, 1.5 * PI);
-      y = map(i,0,89,50,height-50) + 20 * sin(frequency * mappedX);
+    let frequency = 1;
+    for (let x = 20; x < width - 20; x++) {
+      let mappedX = map(x, 20, width - 20, 0, 1.5 * PI); //mapping x to an interval that is just a small portion of the actual sine function
+      let y = map(i,0,89,50,height-50) + amplitude * sin(frequency * mappedX); //i gets mapped so that each parallel sine wave is evenly distributed and then y = mapped i + sine function
       point(x, y);
-      x++;
       frequency += 0.01;
     }
   }
 }
-
