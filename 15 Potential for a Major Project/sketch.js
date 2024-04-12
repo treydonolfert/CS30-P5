@@ -15,9 +15,10 @@ function setup() {
 
 function draw() {
   background(220);
-  text("1 pixel = 0.1 meters", 0, 20);
+  text("1 pixel = " + 1/scale + " meters", 0, 20);
   for (i of balls) {
     i.move();
+    i.onScreen();
     i.display();
   }
 }
@@ -40,6 +41,15 @@ class Ball {
     circle(this.x, this.y, 25);
     line(this.x, this.y, this.x + 10 * this.vX, this.y);
     line(this.x, this.y, this.x, this.y - 10 * this.vY);
+  }
+
+  onScreen() {
+    if (this.x > width) {
+      this.x = 0;
+    }
+    if (this.y > height) {
+      this.y = 0;
+    }
   }
 }
 
