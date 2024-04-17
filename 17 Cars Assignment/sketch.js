@@ -21,8 +21,8 @@ function drawRoad() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   for (let i = 0; i < 20; i++) {
-    eastbound.push(new Vehicle(int(random(2)), color(random(255), random(255), random(255)), random(width), random(width/2, 3 * width/4), 1, int(random(16)))); //possibly round speed
-    westbound.push(new Vehicle(int(random(2)), color(random(255), random(255), random(255)), random(width), random(width/2, 3 * width/4), 0, -1 * int(random(16))));
+    eastbound.push(new Vehicle(int(random(2)), color(random(255), random(255), random(255)), random(width), random(height/2, 3 * height/4), 1, int(random(16)))); //possibly round speed
+    westbound.push(new Vehicle(int(random(2)), color(random(255), random(255), random(255)), random(width), random(height/4, height/2), 0, -1 * int(random(16))));
   }
 }
 
@@ -51,7 +51,7 @@ class Vehicle {
     if (int(random(99)) === 0) {
       this.speedUp();
     }
-    if (int(random(99)) === 0) { //clarify?
+    if (int(random(99)) === 0) { 
       this.speedDown();
     }
     if (int(random(99)) === 0) {
@@ -64,11 +64,17 @@ class Vehicle {
   display() {
     if (this.type === 0) {
       fill(this.color);
-      circle(this.x, this.y, 250);
+      circle(this.x, this.y, 50);
     }
   }
 
   move() {
+    if (this.x + this.xSpeed > width) {
+      this.x = 0;
+    }
+    if (this.x + this.xSpeed < 0) {
+      this.x = width;
+    }
     this.x += this.xSpeed;
   }
 
