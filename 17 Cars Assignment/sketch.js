@@ -4,11 +4,12 @@
 // Cars using classes
 let eastbound = [];
 let westbound = [];
+let radius = 40;
 
 function drawRoad() {
   noStroke();
   fill(0);
-  rect(-width, height/4, width, height/2);
+  rect(0, height/4, width, height/2);
   stroke(255, 255, 0);
   strokeWeight(5);
   for (let i = 0; i < width; i+= 40) {
@@ -20,6 +21,7 @@ function drawRoad() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
+  translate(100, 100, 100);
   for (let i = 0; i < 20; i++) {
     eastbound.push(new Vehicle(int(random(2)), color(random(255), random(255), random(255)), random(width), random(1.1 * height/2, 0.95 * 3 * height/4), 1, int(random(16)))); //possibly round speed
     westbound.push(new Vehicle(int(random(2)), color(random(255), random(255), random(255)), random(width), random(1.1 * height/4, 0.9 * height/2), 0, -1 * int(random(16))));
@@ -28,6 +30,7 @@ function setup() {
 
 function draw() {
   background(220);
+  translate(-width/2, -height/2, 0);
   drawRoad();
   for (i of eastbound) {
     i.action();
@@ -66,7 +69,17 @@ class Vehicle {
       fill(this.color);
       circle(this.x, this.y, 50);
     } else if (this.type === 1) {
-      //cone(40,70);
+      fill(this.color);
+      stroke(0);
+      strokeWeight(1);
+      push();
+      translate(this.x, this.y, radius);
+      rotateX(0.01 * frameCount);
+      rotateY(0.01 * frameCount);
+      rotateZ(0.01 * frameCount);
+      cone(radius,70);
+      pop();
+      noStroke();
     }
   }
 
