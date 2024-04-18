@@ -8,7 +8,7 @@ let westbound = [];
 function drawRoad() {
   noStroke();
   fill(0);
-  rect(0, height/4, width, height/2);
+  rect(-width, height/4, width, height/2);
   stroke(255, 255, 0);
   strokeWeight(5);
   for (let i = 0; i < width; i+= 40) {
@@ -19,10 +19,10 @@ function drawRoad() {
 
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight, WEBGL);
   for (let i = 0; i < 20; i++) {
-    eastbound.push(new Vehicle(int(random(2)), color(random(255), random(255), random(255)), random(width), random(height/2, 3 * height/4), 1, int(random(16)))); //possibly round speed
-    westbound.push(new Vehicle(int(random(2)), color(random(255), random(255), random(255)), random(width), random(height/4, height/2), 0, -1 * int(random(16))));
+    eastbound.push(new Vehicle(int(random(2)), color(random(255), random(255), random(255)), random(width), random(1.1 * height/2, 0.95 * 3 * height/4), 1, int(random(16)))); //possibly round speed
+    westbound.push(new Vehicle(int(random(2)), color(random(255), random(255), random(255)), random(width), random(1.1 * height/4, 0.9 * height/2), 0, -1 * int(random(16))));
   }
 }
 
@@ -65,6 +65,8 @@ class Vehicle {
     if (this.type === 0) {
       fill(this.color);
       circle(this.x, this.y, 50);
+    } else if (this.type === 1) {
+      //cone(40,70);
     }
   }
 
