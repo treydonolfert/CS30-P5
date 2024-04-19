@@ -69,16 +69,29 @@ class Vehicle {
       fill(this.color);
       circle(this.x, this.y, 50);
     } else if (this.type === 1) {
+      let coefficient;
       fill(this.color);
       stroke(0);
       strokeWeight(1);
+      if (this.direction === 0) {
+        coefficient = -1;
+      }
+      else {
+        coefficient = 1;
+      }
       push();
-      translate(this.x, this.y, radius);
-      rotateX(0.01 * frameCount);
-      rotateY(0.01 * frameCount);
-      rotateZ(0.01 * frameCount);
-      cone(radius,70);
+      translate(this.x, this.y, 40);
+      box(70, 30, 40);
+      translate(coefficient * -20, -15, 0);
+      cone(20, 40);
+      translate(0, 30, 0);
+      cone(20, -40);
       pop();
+      // rotateX(0.01 * frameCount);
+      // rotateY(0.01 * frameCount);
+      // rotateZ(0.01 * frameCount);
+      // cone(radius,70);
+      // pop();
       noStroke();
     }
   }
