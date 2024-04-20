@@ -46,8 +46,11 @@ class Vehicle {
     this.color = color;
     this.x = x;
     this.y = y;
+    this.z = 0;
     this.direction = direction;
     this.xSpeed = xSpeed;
+    this.zSpeed = 0;
+    this.flipping = false;
   }
 
   action() {
@@ -59,6 +62,9 @@ class Vehicle {
     }
     if (int(random(99)) === 0) {
       this.changeColor();
+    }
+    if (this.type === 1 && int(random(99)) === 0 && this.flipping === false) {
+      this.flipping = true;
     }
     this.move();
     this.display();
@@ -83,9 +89,15 @@ class Vehicle {
       translate(this.x, this.y, 40);
       box(70, 30, 40);
       translate(coefficient * -20, -15, 0);
+      push();
+      rotateY(this.xSpeed * frameCount / 20); //rotational kinematics to determine angle
       cone(20, 40);
+      pop();
       translate(0, 30, 0);
+      push();
+      rotateY(this.xSpeed * frameCount / 20);
       cone(20, -40);
+      pop();
       pop();
       // rotateX(0.01 * frameCount);
       // rotateY(0.01 * frameCount);
@@ -104,6 +116,10 @@ class Vehicle {
       this.x = width;
     }
     this.x += this.xSpeed;
+
+    if (this.flipping === true) {
+      // rotateY(5 * frameCount);
+    }
   }
 
   speedUp() {
