@@ -3,19 +3,26 @@
 // April 23, 2024
 
 let grid =
-[ [0, 255, 0, 255, 0],
-  [0, 0,   255,   0,   0 ],
-  [0, 255, 255, 0,   255],
-  [255, 255, 0, 255, 255]
-]
+[ [],
+  [],
+  [],
+  [],
+  []
+];
 
 let squareSize = 50;
-const NUM_ROWS = 4; const NUM_COLS = 5;
+const NUM_ROWS = 5; const NUM_COLS = 5;
 
 let row, col;
 
 function setup() {
   createCanvas(NUM_COLS * squareSize, NUM_ROWS * squareSize);
+  for (let i = 0; i < NUM_ROWS; i++) {
+    for (let j = 0; j < NUM_COLS; j++) {
+      if (int(random(2)) === 1) grid[i].push(255);
+      else grid[i].push(0);
+    }
+  }
 }
 
 function draw() {
@@ -26,7 +33,19 @@ function draw() {
 }
 
 function mousePressed() {
-  flip(col, row);
+  //only do something if mouseX/mouseY are on the canvas
+
+  //always flip current tile
+  if (mouseX < width && mouseY < height) {
+    flip(col, row);
+      //flip 4 neighbors
+    if (row < NUM_ROWS-1) flip(col, row+1);
+    if (row > 0) flip(col, row-1);
+    if (col < NUM_COLS-1) flip(col+1, row);
+    if (col > 0) flip(col-1, row);
+  }
+
+
 }
 
 function flip(x,y) {
