@@ -11,6 +11,7 @@ let grid =
 ];
 
 let squareSize = 50;
+let winCheck = true;
 const NUM_ROWS = 5; const NUM_COLS = 5;
 
 let row, col;
@@ -39,12 +40,27 @@ function mousePressed() {
   if (mouseX < width && mouseY < height) {
     flip(col, row);
       //flip 4 neighbors
-    if (row < NUM_ROWS-1) flip(col, row+1);
-    if (row > 0) flip(col, row-1);
-    if (col < NUM_COLS-1) flip(col+1, row);
-    if (col > 0) flip(col-1, row);
+    if (!(keyIsPressed && keyCode === SHIFT)) {
+      if (row < NUM_ROWS-1) flip(col, row+1);
+      if (row > 0) flip(col, row-1);
+      if (col < NUM_COLS-1) flip(col+1, row);
+      if (col > 0) flip(col-1, row);
+    }
+    for (let y = 0; y < NUM_ROWS; y++) {
+      for (let x = 0; x < NUM_COLS; x++) {
+        if (grid[y][x] !== 0) {
+          winCheck = false;
+          break;
+        }
+      }
+      if (winCheck === false) { 
+        break;
+      }
+    }
+    if (winCheck === true) win();
+    else winCheck = true;
   }
-
+print(winCheck);
 
 }
 
@@ -74,4 +90,10 @@ function drawGrid() {
       square(x * squareSize, y * squareSize, squareSize);
     }
   }
+}
+
+function win() {
+  print("f");
+  fill("white");
+  text("ok", width/2, height/2);
 }
