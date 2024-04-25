@@ -11,7 +11,7 @@ let grid =
 ];
 
 let squareSize = 50;
-let winCheck = true;
+let winCheck = true; let winVar = false;
 const NUM_ROWS = 5; const NUM_COLS = 5;
 
 let row, col;
@@ -27,10 +27,16 @@ function setup() {
 }
 
 function draw() {
-  col = getCurrentX();
-  row = getCurrentY(); 
-  background(220);
-  drawGrid();
+    col = getCurrentX();
+    row = getCurrentY(); 
+    background(220);
+    drawGrid();
+    if (winVar === true) {
+      print("f");
+      fill("white");
+      text("ok", width/2, height/2);
+      noLoop();
+    }
 }
 
 function mousePressed() {
@@ -57,7 +63,7 @@ function mousePressed() {
         break;
       }
     }
-    if (winCheck === true) win();
+    if (winCheck === true) winVar = true;
     else winCheck = true;
   }
 print(winCheck);
@@ -90,10 +96,4 @@ function drawGrid() {
       square(x * squareSize, y * squareSize, squareSize);
     }
   }
-}
-
-function win() {
-  print("f");
-  fill("white");
-  text("ok", width/2, height/2);
 }
