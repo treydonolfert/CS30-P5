@@ -63,9 +63,6 @@ class Vehicle {
     if (int(random(99)) === 0) {
       this.changeColor();
     }
-    if (this.type === 1 && int(random(99)) === 0 && this.flipping === false) {
-      this.flipping = true;
-    }
     this.move();
     this.display();
   }
@@ -99,11 +96,6 @@ class Vehicle {
       cone(20, -40);
       pop();
       pop();
-      // rotateX(0.01 * frameCount);
-      // rotateY(0.01 * frameCount);
-      // rotateZ(0.01 * frameCount);
-      // cone(radius,70);
-      // pop();
       noStroke();
     }
   }
@@ -116,10 +108,6 @@ class Vehicle {
       this.x = width;
     }
     this.x += this.xSpeed;
-
-    if (this.flipping === true) {
-      // rotateY(5 * frameCount);
-    }
   }
 
   speedUp() {
