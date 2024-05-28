@@ -11,16 +11,22 @@ function setup() {
 
 function draw() {
   background(220);
-  text("1 pixel = " + 1/scale + " meters", 0, 20);
-  for (i of balls) {
-    i.move();
-    i.display();
+  text("1 pixel = " + 1 / scale + " meters", 0, 20);
+  for (i = 0; i < balls.length; i++) {
+    balls[i].move();
+    if (balls[i].onScreen() === false) {
+      balls.splice(i, 1);
+      continue;
+    }
+    balls[i].display();
   }
 }
 
 function mousePressed() {
-  balls.push(new Ball(mouseX, mouseY, 10, 20, 0, -9.8, scale));
+  balls.push(new Ball(mouseX, mouseY, 10, 20, 0, -9.8));
 }
+
+
 
 /*Helpful Things I found:
 vector.rotate();
