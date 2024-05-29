@@ -24,7 +24,19 @@ class Ball {
         line(0, 0, 0, scale * this.vel.y);
         let arrowSize = 20;
         push();
-        translate(this.vel.x * scale - arrowSize, 0);
+        translate(this.vel.x * scale, 0);
+        if (this.vel.x <= 0) {
+            rotate(PI);
+        }
+        triangle(0, arrowSize/2, 0, -arrowSize/2, arrowSize, 0);
+        pop();
+        push();
+        translate(0, this.vel.y * scale);
+        if (this.vel.y <= 0) {
+            rotate(-0.5 * PI);
+        } else {
+            rotate(0.5 * PI);
+        }
         triangle(0, arrowSize/2, 0, -arrowSize/2, arrowSize, 0);
         pop();
         pop();
