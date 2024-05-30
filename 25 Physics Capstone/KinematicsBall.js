@@ -6,8 +6,8 @@ class Ball {
     }
 
     move() {
-        this.vel.add(this.acc.x * (deltaTime/1000), this.acc.y * (deltaTime/1000));
-        this.pos.add(this.vel.x * (deltaTime/1000) * scale, this.vel.y * (deltaTime/1000) * scale);
+        this.vel.add(this.acc.x * (deltaTime / 1000), this.acc.y * (deltaTime / 1000));
+        this.pos.add(this.vel.x * (deltaTime / 1000) * scale, this.vel.y * (deltaTime / 1000) * scale);
     }
 
     onScreen() {
@@ -23,23 +23,27 @@ class Ball {
         line(0, 0, scale * this.vel.x, 0);
         line(0, 0, 0, scale * this.vel.y);
         let arrowSize = 20;
-        push();
-        translate(this.vel.x * scale, 0);
-        if (this.vel.x <= 0) {
-            rotate(PI);
+        if (this.vel.x !== 0) {
+            push();
+            translate(this.vel.x * scale, 0);
+            if (this.vel.x < 0) {
+                rotate(PI);
+            }
+            triangle(0, arrowSize / 2, 0, -arrowSize / 2, arrowSize, 0);
+            pop();
         }
-        triangle(0, arrowSize/2, 0, -arrowSize/2, arrowSize, 0);
-        pop();
-        push();
-        translate(0, this.vel.y * scale);
-        if (this.vel.y <= 0) {
-            rotate(-0.5 * PI);
-        } else {
-            rotate(0.5 * PI);
+        if (this.vel.y !== 0) {
+            push();
+            translate(0, this.vel.y * scale);
+            if (this.vel.y <= 0) {
+                rotate(-0.5 * PI);
+            } else {
+                rotate(0.5 * PI);
+            }
+            triangle(0, arrowSize / 2, 0, -arrowSize / 2, arrowSize, 0);
+            pop();
         }
-        triangle(0, arrowSize/2, 0, -arrowSize/2, arrowSize, 0);
-        pop();
         pop();
     }
-    
+
 }

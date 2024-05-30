@@ -4,9 +4,12 @@
 
 let balls = [];
 let scale = 10;
+let timer1, timer2;
+let stage = 1;
 
 function setup() {
   createCanvas(800, 800);
+  timer1 = millis();
   textAlign(CENTER);
 }
 
@@ -26,8 +29,19 @@ function draw() {
 }
 
 function kinematics() {
-  text("This is a ball in a constant position.",400,200);
-  balls.push(new Ball(400,400,0,0,0,0));
+  timer2 = millis();
+  if (timer2 - timer1 >= 3000) {
+    stage++;
+    balls = [];
+    timer1 = millis();
+  }
+  if (stage === 1) {
+    text("This is a ball in a constant position.", 400, 200);
+    balls.push(new Ball(400, 400, 0, 0, 0, 0));
+  } else if (stage === 2) {
+    text("This is a ball with a constant velocity. Velocity is the rate of change of position.", 400, 200);
+    balls.push(new Ball(400,400,10,10,0,0));
+  }
 }
 
 // function mousePressed() {
