@@ -8,6 +8,7 @@ let timer1, timer2;
 let stage = 1;
 let newBall = true;
 let threshold = 5000;
+let inputs = [];
 
 function setup() {
   createCanvas(800, 800);
@@ -49,30 +50,41 @@ function kinematics() {
   } else if (stage === 2) {
     text("This is a ball with a constant velocity. Velocity is the rate of change of position.\nThe arrows on the ball are the vertical and horizontal components of the ball's velocity.", 400, 200);
     if (newBall === true) {
-      balls.push(new Ball(400,400,10,20,0,0));
+      balls.push(new Ball(400, 400, 10, 20, 0, 0));
       threshold = 8000;
       newBall = false;
     }
   } else if (stage === 3) {
     text("This is a ball with no initial velocity and constant acceleration. Acceleration is the rate of change of velocity.", 400, 200);
     if (newBall === true) {
-      balls.push(new Ball(400,400,0,0,10,5));
+      balls.push(new Ball(400, 400, 0, 0, 10, 5));
       threshold = 8000;
       newBall = false;
     }
   } else if (stage === 4) {
-    text("This is a common scenario referred to as projectile motion. Acceleration due to Earth's gravity is roughly -9.8m/s^2 and only affects the vertical component of velocity.\nAir resistance is assumed to be negligible, so there is no horizontal acceleration.",400,200);
+    text("This is a common scenario referred to as projectile motion. Acceleration due to Earth's gravity is roughly -9.8m/s^2 and only affects the vertical component of velocity.\nAir resistance is assumed to be negligible, so there is no horizontal acceleration.", 400, 200);
     if (newBall === true) {
-      balls.push(new Ball(400,400,10,20,0,-9.8));
+      balls.push(new Ball(400, 400, 10, 20, 0, -9.8));
       threshold = 10000;
+      newBall = false;
+    }
+  } else if (stage === 5) {
+    threshold = 3e5;
+    if (newBall === true) {
+      for (let i = 0; i < 4; i++) {
+        inputs.push(createInput());
+        inputs[i].position(10, 750 - 50 * i);
+      }
       newBall = false;
     }
   }
 }
 
-// function mousePressed() {
-//   balls.push(new Ball(mouseX, mouseY, 10, 20, -10, -9.8));
-// }
+function mousePressed() {
+  if (stage === 5) {
+    balls.push(new Ball(mouseX, mouseY, inputs[0].value(), inputs[1].value(), inputs[2].value(), inputs[3].value()));
+  }
+}
 
 
 

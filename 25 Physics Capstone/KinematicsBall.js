@@ -40,19 +40,22 @@ class Ball {
         let arrowSize = 20;
         if (this.vel.x !== 0) {
             push();
-            translate(this.vel.x * scale, 0);
             if (this.vel.x < 0) {
+                translate(this.vel.x * scale + arrowSize, 0);
                 rotate(PI);
+            } else {
+                translate(this.vel.x * scale - arrowSize, 0);
             }
             triangle(0, arrowSize / 2, 0, -arrowSize / 2, arrowSize, 0);
             pop();
         }
         if (this.vel.y !== 0) {
             push();
-            translate(0, this.vel.y * scale);
-            if (this.vel.y <= 0) {
+            if (this.vel.y < 0) {
+                translate(0,this.vel.y * scale + arrowSize);
                 rotate(-0.5 * PI);
             } else {
+                translate(0,this.vel.y * scale - arrowSize);
                 rotate(0.5 * PI);
             }
             triangle(0, arrowSize / 2, 0, -arrowSize / 2, arrowSize, 0);
