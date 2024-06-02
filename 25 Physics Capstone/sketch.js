@@ -25,7 +25,10 @@ function draw() {
     if (stage !== 5) {
       balls[i].onScreen2();
     } else {
-      balls[i].onScreen1();
+      if (balls[i].onScreen1() === false) {
+        balls.splice(i,1);
+        continue;
+      }
     }
     balls[i].display();
     // if (balls[i].onScreen1() === false) {
