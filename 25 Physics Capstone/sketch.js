@@ -22,7 +22,11 @@ function draw() {
   kinematics();
   for (i = 0; i < balls.length; i++) {
     balls[i].move();
-    balls[i].onScreen2();
+    if (stage !== 5) {
+      balls[i].onScreen2();
+    } else {
+      balls[i].onScreen1();
+    }
     balls[i].display();
     // if (balls[i].onScreen1() === false) {
     //   balls.splice(i, 1);
@@ -69,11 +73,11 @@ function kinematics() {
       newBall = false;
     }
   } else if (stage === 5) {
-    threshold = 3e5;
+    threshold = 3e5; //5 minutes
     if (newBall === true) {
       for (let i = 0; i < 4; i++) {
         inputs.push(createInput());
-        inputs[i].position(10, 750 - 50 * i);
+        inputs[i].position(10, 600 + 50 * i);
       }
       newBall = false;
     }
@@ -82,7 +86,7 @@ function kinematics() {
 
 function mousePressed() {
   if (stage === 5) {
-    balls.push(new Ball(mouseX, mouseY, inputs[0].value(), inputs[1].value(), inputs[2].value(), inputs[3].value()));
+    balls.push(new Ball(mouseX, mouseY, int(inputs[0].value()), int(inputs[1].value()), int(inputs[2].value()), int(inputs[3].value())));
   }
 }
 
