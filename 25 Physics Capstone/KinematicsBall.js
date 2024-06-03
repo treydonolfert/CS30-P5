@@ -11,7 +11,7 @@ class Ball {
     }
 
     onScreen1() {
-        if (this.pos.x < 0 || this.pos.x > width || this.pos.y < 0 || this.pos.y > height) {
+        if (this.pos.x < -50 || this.pos.x > 850 || this.pos.y < -50 || this.pos.y > 850) {
             return false;
         }
     }
