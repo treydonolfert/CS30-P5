@@ -9,6 +9,7 @@ let stage = 1;
 let newBall = true;
 let threshold = 5000;
 let inputs = [];
+let buttons = [];
 
 function setup() {
   createCanvas(800, 800);
@@ -45,6 +46,8 @@ function kinematics() {
   if (timer2 - timer1 >= threshold) {
     stage++;
     balls = [];
+    inputs = [];
+    buttons = [];
     timer1 = millis();
     newBall = true;
   }
@@ -69,9 +72,9 @@ function kinematics() {
       newBall = false;
     }
   } else if (stage === 4) {
-    text("This is a common scenario referred to as projectile motion. Acceleration due to Earth's gravity is roughly -9.8m/s^2 and only affects the vertical component of velocity.\nAir resistance is assumed to be negligible, so there is no horizontal acceleration.", 400, 200);
+    text("This is a common scenario referred to as projectile motion. Acceleration due to Earth's gravity is roughly -9.8m/s² and only affects the vertical component of velocity.\nAir resistance is assumed to be negligible, so there is no horizontal acceleration.", 400, 200);
     if (newBall === true) {
-      balls.push(new Ball(400, 400, 10, 20, 0, -9.8));
+      balls.push(new Ball(400, 400, 10, 20, 0, -9.8)); 
       threshold = 10000;
       newBall = false;
     }
@@ -80,10 +83,17 @@ function kinematics() {
     if (newBall === true) {
       for (let i = 0; i < 4; i++) {
         inputs.push(createInput());
-        inputs[i].position(10, 600 + 50 * i);
+        inputs[i].position(100, 600 + 50 * i);
       }
+      buttons.push(createButton('Continue to Dynamics'));
+      buttons[0].position(750, 600);
       newBall = false;
     }
+      buttons[0].mousePressed(stageProgress);
+      text("X Velocity (m/s): ", 60, 590);
+      text("Y Velocity (m/s): ", 60, 640);
+      text("X Acceleration (m/s²): ", 60, 690);
+      text("Y Acceleration (m/s²): ", 60, 740);
   }
 }
 
@@ -93,6 +103,9 @@ function mousePressed() {
   }
 }
 
+function stageProgress() {
+  stage++;
+}
 
 
 /*Helpful Things I found:
