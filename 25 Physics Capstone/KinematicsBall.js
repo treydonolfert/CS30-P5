@@ -1,7 +1,7 @@
 class Ball {
     constructor(x, y, vx, vy, ax, ay) {
         this.pos = createVector(x, y);
-        this.vel = createVector(vx, -1 * vy);
+        this.vel = createVector(vx, -1 * vy); //adjusts with -1 so the inputs are more intuitive with - being downward
         this.acc = createVector(ax, -1 * ay);
     }
 

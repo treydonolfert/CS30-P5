@@ -49,27 +49,27 @@ function kinematics() {
   if (stage === 1) {
     text("This is a ball in a constant position.", 400, 200);
     if (newBall === true) {
-      balls.push(new Ball(400, 400, 0, 0, 0, 0));
+      objects.push(new Ball(400, 400, 0, 0, 0, 0));
       newBall = false;
     }
   } else if (stage === 2) {
     text("This is a ball with a constant velocity. Velocity is the rate of change of position.\nThe arrows on the ball are the vertical and horizontal components of the ball's velocity.", 400, 200);
     if (newBall === true) {
-      balls.push(new Ball(400, 400, 10, 20, 0, 0));
+      objects.push(new Ball(400, 400, 10, 20, 0, 0));
       threshold = 8000;
       newBall = false;
     }
   } else if (stage === 3) {
     text("This is a ball with no initial velocity and constant acceleration. Acceleration is the rate of change of velocity.", 400, 200);
     if (newBall === true) {
-      balls.push(new Ball(400, 400, 0, 0, 10, 5));
+      objects.push(new Ball(400, 400, 0, 0, 10, 5));
       threshold = 8000;
       newBall = false;
     }
   } else if (stage === 4) {
     text("This is a common scenario referred to as projectile motion. Acceleration due to Earth's gravity is roughly -9.8m/s² and only affects the vertical component of velocity.\nAir resistance is assumed to be negligible, so there is no horizontal acceleration.", 400, 200);
     if (newBall === true) {
-      balls.push(new Ball(400, 400, 10, 20, 0, -9.8)); 
+      objects.push(new Ball(400, 400, 10, 20, 0, -9.8)); 
       threshold = 10000;
       newBall = false;
     }
@@ -91,19 +91,19 @@ function kinematics() {
       text("X Acceleration (m/s²): ", 60, 690);
       text("Y Acceleration (m/s²): ", 60, 740);
   } else if (stage === 6) {
-    threshold = 
+    
   }
 }
 
 function mousePressed() {
   if (stage === 5) {
-    balls.push(new Ball(mouseX, mouseY, int(inputs[0].value()), int(inputs[1].value()), int(inputs[2].value()), int(inputs[3].value())));
+    objects.push(new Ball(mouseX, mouseY, int(inputs[0].value()), int(inputs[1].value()), int(inputs[2].value()), int(inputs[3].value())));
   }
 }
 
 function stageProgress() {
   stage++;
-  balls = [];
+  objects = [];
   for (i of inputs) {
     i.remove();
   }
