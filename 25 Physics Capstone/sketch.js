@@ -2,7 +2,7 @@
 // Treydon Olfert
 // May 23, 2024
 
-let balls = [];
+let objects = [];
 let scale = 10;
 let timer1, timer2;
 let stage = 1;
@@ -21,17 +21,17 @@ function draw() {
   background(220);
   text("1 pixel = " + 1 / scale + " meters", 50, 20);
   kinematics();
-  for (i = 0; i < balls.length; i++) {
-    balls[i].move();
+  for (i = 0; i < objects.length; i++) {
+    objects[i].move();
     if (stage !== 5) {
-      balls[i].onScreen2();
+      objects[i].onScreen2();
     } else {
-      if (balls[i].onScreen1() === false) {
-        balls.splice(i,1);
+      if (objects[i].onScreen1() === false) {
+        objects.splice(i,1);
         continue;
       }
     }
-    balls[i].display();
+    objects[i].display();
     // if (balls[i].onScreen1() === false) {
     //   balls.splice(i, 1);
     // }
@@ -44,12 +44,7 @@ function draw() {
 function kinematics() {
   timer2 = millis();
   if (timer2 - timer1 >= threshold) {
-    stage++;
-    balls = [];
-    inputs = [];
-    buttons = [];
-    timer1 = millis();
-    newBall = true;
+    stageProgress();
   }
   if (stage === 1) {
     text("This is a ball in a constant position.", 400, 200);
@@ -86,14 +81,17 @@ function kinematics() {
         inputs[i].position(100, 600 + 50 * i);
       }
       buttons.push(createButton('Continue to Dynamics'));
-      buttons[0].position(750, 600);
+      buttons[0].position(600, 600);
       newBall = false;
     }
       buttons[0].mousePressed(stageProgress);
+      text("Will automatically move on after 5 minutes.", 650, 650);
       text("X Velocity (m/s): ", 60, 590);
       text("Y Velocity (m/s): ", 60, 640);
       text("X Acceleration (m/s²): ", 60, 690);
       text("Y Acceleration (m/s²): ", 60, 740);
+  } else if (stage === 6) {
+    threshold = 
   }
 }
 
@@ -105,6 +103,17 @@ function mousePressed() {
 
 function stageProgress() {
   stage++;
+  balls = [];
+  for (i of inputs) {
+    i.remove();
+  }
+  inputs = [];
+  for (i of buttons) {
+    i.remove();
+  }
+  buttons = [];
+  timer1 = millis();
+  newBall = true;
 }
 
 
