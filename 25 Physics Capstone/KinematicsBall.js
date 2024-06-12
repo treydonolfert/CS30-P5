@@ -3,6 +3,7 @@ class Ball {
         this.pos = createVector(x, y);
         this.vel = createVector(vx, -1 * vy); //adjusts with -1 so the inputs are more intuitive with - being downward
         this.acc = createVector(ax, -1 * ay);
+        this.size = 100;
     }
 
     move() {
@@ -11,28 +12,28 @@ class Ball {
     }
 
     onScreen1() {
-        if (this.pos.x < -50 || this.pos.x > 850 || this.pos.y < -50 || this.pos.y > 850) {
+        if (this.pos.x < -0.5 * this.size || this.pos.x > 800 + 0.5 * this.size || this.pos.y < -0.5 * this.size || this.pos.y > 800 + 0.5 * this.size) {
             return false;
         }
     }
 
     onScreen2() {
-        if (this.pos.x > 850) {
-            this.pos.x = -50 + (this.pos.x-850);
+        if (this.pos.x > 800 + 0.5 * this.size) {
+            this.pos.x = -0.5 * this.size + (this.pos.x-(800 + 0.5 * this.size));
         }
-        if (this.pos.x < -50) {
-            this.pos.x = 850 + (-50-this.pos.x);
+        if (this.pos.x < -this.size) {
+            this.pos.x = 800 + 0.5 * this.size + (-0.5 * this.size - this.pos.x);
         }
-        if (this.pos.y > 850) {
-            this.pos.y = -50 + (this.pos.y-850);
+        if (this.pos.y > 800 + 0.5 * this.size) {
+            this.pos.y = -0.5 * this.size + (this.pos.y-(800 + 0.5 * this.size));
         } 
-        if (this.pos.y < -50) {
-            this.pos.y = 850 + (-50-this.pos.y);
+        if (this.pos.y < -0.5 * this.size) {
+            this.pos.y = 800 + 0.5 * this.size + (-0.5 * this.size -this.pos.y);
         }
     }
 
     display() {
-        circle(this.pos.x, this.pos.y, 100);
+        circle(this.pos.x, this.pos.y, this.size);
         push();
         translate(this.pos.x, this.pos.y);
         line(0, 0, scale * this.vel.x, 0);

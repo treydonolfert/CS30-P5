@@ -5,7 +5,7 @@
 let objects = [];
 let scale = 10;
 let timer1, timer2;
-let stage = 1;
+let stage = 5;
 let newBall = true;
 let threshold = 5000;
 let inputs = [];
@@ -15,6 +15,7 @@ function setup() {
   createCanvas(800, 800);
   timer1 = millis();
   textAlign(CENTER);
+  rectMode(CENTER);
 }
 
 function draw() {
@@ -22,6 +23,7 @@ function draw() {
   text("1 pixel = " + 1 / scale + " meters", 50, 20);
   kinematics();
   for (i = 0; i < objects.length; i++) {
+    console.log(i);
     objects[i].move();
     if (stage !== 5) {
       objects[i].onScreen2();
@@ -74,7 +76,6 @@ function kinematics() {
       newBall = false;
     }
   } else if (stage === 5) {
-    threshold = 3e5; //5 minutes
     if (newBall === true) {
       for (let i = 0; i < 4; i++) {
         inputs.push(createInput());
@@ -82,6 +83,7 @@ function kinematics() {
       }
       buttons.push(createButton('Continue to Dynamics'));
       buttons[0].position(600, 600);
+      threshold = 3e5; //5 minutes
       newBall = false;
     }
       buttons[0].mousePressed(stageProgress);
@@ -91,7 +93,13 @@ function kinematics() {
       text("X Acceleration (m/s²): ", 60, 690);
       text("Y Acceleration (m/s²): ", 60, 740);
   } else if (stage === 6) {
-    
+    text("Newton's First Law: An object will maintain its velocity if the forces are balanced.\nThis box has forces acting on it, but they cancel out and cause the box to maintain its 0 m/s velocity.",400,200);
+    if (newBall === true) {
+      objects.push(new Box(400,400,0,0,[createVector(10,10), createVector(0,-10), createVector(-10,0)],5));
+      threshold = 3e5;
+      newBall = false;
+    }
+
   }
 }
 
