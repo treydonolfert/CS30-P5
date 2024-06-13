@@ -21,7 +21,7 @@ class Ball {
         if (this.pos.x > 800 + 0.5 * this.size) {
             this.pos.x = -0.5 * this.size + (this.pos.x-(800 + 0.5 * this.size));
         }
-        if (this.pos.x < -this.size) {
+        if (this.pos.x < -0.5 * this.size) {
             this.pos.x = 800 + 0.5 * this.size + (-0.5 * this.size - this.pos.x);
         }
         if (this.pos.y > 800 + 0.5 * this.size) {

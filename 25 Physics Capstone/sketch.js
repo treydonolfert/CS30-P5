@@ -22,7 +22,7 @@ function draw() {
   background(220);
   text("1 pixel = " + 1 / scale + " meters", 50, 20);
   kinematics();
-  for (i = 0; i < objects.length; i++) {
+  for (let i = 0; i < objects.length; i++) {
     console.log(i);
     objects[i].move();
     if (stage !== 5) {
@@ -93,7 +93,7 @@ function kinematics() {
       text("X Acceleration (m/s²): ", 60, 690);
       text("Y Acceleration (m/s²): ", 60, 740);
   } else if (stage === 6) {
-    text("Newton's First Law: An object will maintain its velocity if the forces are balanced.\nThis box has forces acting on it, but they cancel out and cause the box to maintain its 0 m/s velocity.",400,200);
+    text("Newton's First Law: An object will maintain its velocity if the forces are balanced.\nThis box has forces acting on it, but they cancel out and cause the box to maintain its 0 m/s velocity.\nNote: The arrows show acceleration in m/s²",400,200);
     if (newBall === true) {
       objects.push(new Box(400,400,0,0,[createVector(10,10), createVector(0,-10), createVector(-10,0)],5));
       threshold = 3e5;
@@ -112,11 +112,11 @@ function mousePressed() {
 function stageProgress() {
   stage++;
   objects = [];
-  for (i of inputs) {
+  for (let i of inputs) {
     i.remove();
   }
   inputs = [];
-  for (i of buttons) {
+  for (let i of buttons) {
     i.remove();
   }
   buttons = [];
