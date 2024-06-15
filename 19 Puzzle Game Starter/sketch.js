@@ -11,13 +11,14 @@ let grid =
 ];
 
 let squareSize = 50;
-let winCheck = true; let winVar = false;
+let winCheck = true; let win = false;
 const NUM_ROWS = 5; const NUM_COLS = 5;
 
 let row, col;
 
 function setup() {
   createCanvas(NUM_COLS * squareSize, NUM_ROWS * squareSize);
+  textAlign(CENTER);
   for (let i = 0; i < NUM_ROWS; i++) {
     for (let j = 0; j < NUM_COLS; j++) {
       if (int(random(2)) === 1) grid[i].push(255);
@@ -31,19 +32,21 @@ function draw() {
     row = getCurrentY(); 
     background(220);
     drawGrid();
-    if (winVar === true) {
-      print("f");
+    drawOverlay();
+    if (winCheck === true) {
       fill("white");
-      text("ok", width/2, height/2);
+      text("You win!", width/2, height/2);
+      win = true;
       noLoop();
     }
+    else winCheck = true;
 }
 
 function mousePressed() {
   //only do something if mouseX/mouseY are on the canvas
 
   //always flip current tile
-  if (mouseX < width && mouseY < height) {
+  if (mouseX < width && mouseY < height && win === false) {
     flip(col, row);
       //flip 4 neighbors
     if (!(keyIsPressed && keyCode === SHIFT)) {
@@ -52,22 +55,7 @@ function mousePressed() {
       if (col < NUM_COLS-1) flip(col+1, row);
       if (col > 0) flip(col-1, row);
     }
-    for (let y = 0; y < NUM_ROWS; y++) {
-      for (let x = 0; x < NUM_COLS; x++) {
-        if (grid[y][x] !== 0) {
-          winCheck = false;
-          break;
-        }
-      }
-      if (winCheck === false) { 
-        break;
-      }
-    }
-    if (winCheck === true) winVar = true;
-    else winCheck = true;
   }
-print(winCheck);
-
 }
 
 function flip(x,y) {
@@ -86,6 +74,14 @@ function getCurrentX() {
   return int(constrainX/squareSize);
 }
 
+function drawOverlay() {
+  fill(0,255,0,100);
+  square(col * squareSize, row * squareSize, squareSize);
+  if (row < NUM_ROWS-1) square(col * squareSize, (row+1) * squareSize, squareSize);
+  if (row > 0) square(col * squareSize, (row-1) * squareSize, squareSize);
+  if (col < NUM_COLS-1) square((col+1) * squareSize, row * squareSize, squareSize);
+  if (col > 0) square((col-1) * squareSize, row * squareSize, squareSize);
+}
 
 function drawGrid() {
   //read data from our 2d array (grid) and use the numbers to set the color for squares whcih are arranged in a grid fashion
@@ -94,6 +90,9 @@ function drawGrid() {
       let fillValue = grid[y][x];
       fill(fillValue);
       square(x * squareSize, y * squareSize, squareSize);
+      if (grid[y][x] !== 0) {
+        winCheck = false;
+      }
     }
   }
 }
