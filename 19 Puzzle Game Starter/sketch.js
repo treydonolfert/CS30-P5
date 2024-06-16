@@ -3,18 +3,20 @@
 // April 23, 2024
 
 let grid =
-[ [],
+  [[],
   [],
   [],
   [],
   []
-];
+  ];
 
 let squareSize = 50;
 let winCheck = true; let win = false;
 const NUM_ROWS = 5; const NUM_COLS = 5;
 
 let row, col;
+let state = 0;
+// let shiftPress = false;
 
 function setup() {
   createCanvas(NUM_COLS * squareSize, NUM_ROWS * squareSize);
@@ -28,18 +30,18 @@ function setup() {
 }
 
 function draw() {
-    col = getCurrentX();
-    row = getCurrentY(); 
-    background(220);
-    drawGrid();
-    drawOverlay();
-    if (winCheck === true) {
-      fill("white");
-      text("You win!", width/2, height/2);
-      win = true;
-      noLoop();
-    }
-    else winCheck = true;
+  col = getCurrentX();
+  row = getCurrentY();
+  background(220);
+  drawGrid();
+  if (winCheck === true) {
+    fill("white");
+    text("You win!", width / 2, height / 2);
+    win = true;
+    noLoop();
+  }
+  else winCheck = true;
+  drawOverlay();
 }
 
 function mousePressed() {
@@ -48,39 +50,61 @@ function mousePressed() {
   //always flip current tile
   if (mouseX < width && mouseY < height && win === false) {
     flip(col, row);
-      //flip 4 neighbors
-    if (!(keyIsPressed && keyCode === SHIFT)) {
-      if (row < NUM_ROWS-1) flip(col, row+1);
-      if (row > 0) flip(col, row-1);
-      if (col < NUM_COLS-1) flip(col+1, row);
-      if (col > 0) flip(col-1, row);
+    //flip 4 neighbors
+    if (keyIsDown(SHIFT) === false) {
+      if (state === 0) {
+        if (row < NUM_ROWS - 1) flip(col, row + 1);
+        if (row > 0) flip(col, row - 1);
+        if (col < NUM_COLS - 1) flip(col + 1, row);
+        if (col > 0) flip(col - 1, row);
+      } else {
+        if (row < NUM_ROWS - 1) flip(col,row+1);
+        if (col < NUM_COLS - 1) flip(col + 1, row);
+        if (row < NUM_ROWS -1 && col < NUM_COLS - 1) flip(col + 1, row + 1);
+      }
     }
   }
 }
 
-function flip(x,y) {
+function keyPressed() {
+  if (key === ' ') {
+    state = (state+1) % 2;
+  }
+}
+
+function flip(x, y) {
   if (grid[y][x] === 0) grid[y][x] = 255;
   else grid[y][x] = 0;
 }
 
 function getCurrentY() {
-  let constrainY = constrain(mouseY, 0, height-1);
-  return int(constrainY/squareSize);
+  let constrainY = constrain(mouseY, 0, height - 1);
+  return int(constrainY / squareSize);
 }
 
 function getCurrentX() {
   //determine the current column of the mouse and return
-  let constrainX = constrain(mouseX, 0, width-1);
-  return int(constrainX/squareSize);
+  let constrainX = constrain(mouseX, 0, width - 1);
+  return int(constrainX / squareSize);
 }
 
 function drawOverlay() {
-  fill(0,255,0,100);
-  square(col * squareSize, row * squareSize, squareSize);
-  if (row < NUM_ROWS-1) square(col * squareSize, (row+1) * squareSize, squareSize);
-  if (row > 0) square(col * squareSize, (row-1) * squareSize, squareSize);
-  if (col < NUM_COLS-1) square((col+1) * squareSize, row * squareSize, squareSize);
-  if (col > 0) square((col-1) * squareSize, row * squareSize, squareSize);
+  if (win === false) {
+    fill(0, 255, 0, 100);
+    square(col * squareSize, row * squareSize, squareSize);
+    if (keyIsDown(SHIFT) === false) {
+      if (state === 0) {
+        if (row < NUM_ROWS - 1) square(col * squareSize, (row + 1) * squareSize, squareSize);
+        if (row > 0) square(col * squareSize, (row - 1) * squareSize, squareSize);
+        if (col < NUM_COLS - 1) square((col + 1) * squareSize, row * squareSize, squareSize);
+        if (col > 0) square((col - 1) * squareSize, row * squareSize, squareSize);
+      } else {
+        if (row < NUM_ROWS-1) square(col * squareSize, (row+1) * squareSize, squareSize);
+        if (col < NUM_COLS - 1) square((col+1) * squareSize, row * squareSize, squareSize);
+        if (row < NUM_ROWS - 1 && col < NUM_COLS - 1) square((col+1) * squareSize, (row+1) * squareSize, squareSize);
+      }
+    }
+  }
 }
 
 function drawGrid() {
