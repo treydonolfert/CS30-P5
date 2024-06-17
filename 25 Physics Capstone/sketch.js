@@ -5,7 +5,7 @@
 let objects = [];
 let scale = 10;
 let timer1, timer2;
-let stage = 5;
+let stage = 1;
 let newBall = true;
 let threshold = 5000;
 let inputs = [];
