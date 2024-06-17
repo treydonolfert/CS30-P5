@@ -10,6 +10,7 @@ let newBall = true;
 let threshold = 5000;
 let inputs = [];
 let buttons = [];
+let demoVar = false;
 
 function setup() {
   createCanvas(800, 800);
@@ -21,9 +22,7 @@ function setup() {
 function draw() {
   background(220);
   text("1 pixel = " + 1 / scale + " meters", 50, 20);
-  kinematics();
   for (let i = 0; i < objects.length; i++) {
-    console.log(i);
     objects[i].move();
     if (stage !== 5) {
       objects[i].onScreen2();
@@ -41,17 +40,19 @@ function draw() {
     //   balls[i].display();
     // }
   }
+  kinematics();
 }
 
 function kinematics() {
   timer2 = millis();
-  if (timer2 - timer1 >= threshold) {
+  if (timer2 - timer1 >= threshold && stage !== 5) {
     stageProgress();
   }
   if (stage === 1) {
     text("This is a ball in a constant position.", 400, 200);
     if (newBall === true) {
       objects.push(new Ball(400, 400, 0, 0, 0, 0));
+      threshold = 5000;
       newBall = false;
     }
   } else if (stage === 2) {
@@ -82,12 +83,15 @@ function kinematics() {
         inputs[i].position(100, 600 + 50 * i);
       }
       buttons.push(createButton('Continue to Dynamics'));
+      buttons.push(createButton('Delete all Objects'));
       buttons[0].position(600, 600);
+      buttons[1].position(600,575);
       threshold = 3e5; //5 minutes
       newBall = false;
     }
       buttons[0].mousePressed(stageProgress);
-      text("Will automatically move on after 5 minutes.", 650, 650);
+      buttons[1].mousePressed(deleteObjects);
+      text("Will automatically move on after 5 minutes.\nFor demo purposes, there is no time limit \nand pressing the button resets the program\n to the kinematics animation, rather than continuing to \ndynamics. This will be changed in the \nfull program.", 650, 650);
       text("X Velocity (m/s): ", 60, 590);
       text("Y Velocity (m/s): ", 60, 640);
       text("X Acceleration (m/s²): ", 60, 690);
@@ -104,8 +108,10 @@ function kinematics() {
 }
 
 function mousePressed() {
-  if (stage === 5) {
-    objects.push(new Ball(mouseX, mouseY, int(inputs[0].value()), int(inputs[1].value()), int(inputs[2].value()), int(inputs[3].value())));
+  if (stage === 5 && demoVar === false) {
+    objects.push(new Ball(mouseX, mouseY, float(inputs[0].value()), float(inputs[1].value()), float(inputs[2].value()), float(inputs[3].value())));
+  } else {
+    demoVar = false;
   }
 }
 
@@ -122,6 +128,14 @@ function stageProgress() {
   buttons = [];
   timer1 = millis();
   newBall = true;
+  if (stage === 6) {
+    stage = 1;
+  }
+}
+
+function deleteObjects() {
+  objects = [];
+  demoVar = true;
 }
 
 
