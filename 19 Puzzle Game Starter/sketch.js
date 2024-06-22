@@ -1,7 +1,9 @@
 // Puzzle Game Starter
 // Treydon Olfert
 // April 23, 2024
+// Puzzle game played by clicking and making the whole grid black
 
+//Grid + global variables
 let grid =
   [[],
   [],
@@ -9,16 +11,14 @@ let grid =
   [],
   []
   ];
-
 let squareSize = 50;
 let winCheck = true; let win = false;
 const NUM_ROWS = 5; const NUM_COLS = 5;
 
 let row, col;
 let state = 0;
-// let shiftPress = false;
 
-function setup() {
+function setup() { //create canvas based on the grid's rows and columns, then randomizes the grid
   createCanvas(NUM_COLS * squareSize, NUM_ROWS * squareSize);
   textAlign(CENTER);
   for (let i = 0; i < NUM_ROWS; i++) {
@@ -29,7 +29,7 @@ function setup() {
   }
 }
 
-function draw() {
+function draw() { //gets the col and row that the mouse is nearest to, draws the grid, checks if the game is won, then draws the overlay
   col = getCurrentX();
   row = getCurrentY();
   background(220);
@@ -46,18 +46,15 @@ function draw() {
 
 function mousePressed() {
   //only do something if mouseX/mouseY are on the canvas
-
-  //always flip current tile
   if (mouseX < width && mouseY < height && win === false) {
-    flip(col, row);
-    //flip 4 neighbors
-    if (keyIsDown(SHIFT) === false) {
-      if (state === 0) {
+    flip(col, row); //flips current tile
+    if (keyIsDown(SHIFT) === false) { //only flips any other tiles if shift isn't being held down
+      if (state === 0) {  //cross flip
         if (row < NUM_ROWS - 1) flip(col, row + 1);
         if (row > 0) flip(col, row - 1);
         if (col < NUM_COLS - 1) flip(col + 1, row);
         if (col > 0) flip(col - 1, row);
-      } else {
+      } else { //square flip, where the mouse tile is the top left corner of the square
         if (row < NUM_ROWS - 1) flip(col,row+1);
         if (col < NUM_COLS - 1) flip(col + 1, row);
         if (row < NUM_ROWS -1 && col < NUM_COLS - 1) flip(col + 1, row + 1);
@@ -68,16 +65,17 @@ function mousePressed() {
 
 function keyPressed() {
   if (key === ' ') {
-    state = (state+1) % 2;
+    state = (state+1) % 2; //switches between cross and square flips
   }
 }
 
-function flip(x, y) {
+function flip(x, y) { //flips inputted grid coordinate between white and black
   if (grid[y][x] === 0) grid[y][x] = 255;
   else grid[y][x] = 0;
 }
 
 function getCurrentY() {
+  //determine the current row of the mouse and return
   let constrainY = constrain(mouseY, 0, height - 1);
   return int(constrainY / squareSize);
 }
@@ -88,7 +86,7 @@ function getCurrentX() {
   return int(constrainX / squareSize);
 }
 
-function drawOverlay() {
+function drawOverlay() { //overlay drawn using the 4th fill() parameter. the code mimics the mousePressed() code
   if (win === false) {
     fill(0, 255, 0, 100);
     square(col * squareSize, row * squareSize, squareSize);
@@ -114,8 +112,8 @@ function drawGrid() {
       let fillValue = grid[y][x];
       fill(fillValue);
       square(x * squareSize, y * squareSize, squareSize);
-      if (grid[y][x] !== 0) {
-        winCheck = false;
+      if (grid[y][x] !== 0) { //the moment any of the squares are found to be light, the win condition is false
+        winCheck = false; 
       }
     }
   }
