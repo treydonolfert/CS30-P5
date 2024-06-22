@@ -40,7 +40,7 @@ function drawRectangles(dHeight) {
 
 function drawFlag(x,y) { //draws the flag on the highest rectangle
   line(x,y,x,y-50);
-  fill(255);
+  fill(0,255,0);
   triangle(x,y-25,x,y-50,x+15,y-37.5);
 }
 
