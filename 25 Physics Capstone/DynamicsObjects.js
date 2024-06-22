@@ -43,6 +43,12 @@ class Box {
 
     display() {
         square(this.pos.x,this.pos.y,this.size);
+        if (this.accForces.length !== 0) {
+            push();
+            fill(0);
+            circle(this.pos.x,this.pos.y,10);
+            pop();
+        }
         push();
         translate(this.pos.x, this.pos.y);
         for (let i of this.accForces) {

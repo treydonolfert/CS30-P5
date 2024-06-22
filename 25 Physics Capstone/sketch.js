@@ -5,7 +5,7 @@
 let objects = [];
 let scale = 10;
 let timer1, timer2;
-let stage = 1;
+let stage = 5;
 let newBall = true;
 let threshold = 5000;
 let inputs = [];
@@ -45,7 +45,7 @@ function draw() {
 
 function kinematics() {
   timer2 = millis();
-  if (timer2 - timer1 >= threshold && stage !== 5) {
+  if (timer2 - timer1 >= threshold) {
     stageProgress();
   }
   if (stage === 1) {
@@ -91,7 +91,7 @@ function kinematics() {
     }
       buttons[0].mousePressed(stageProgress);
       buttons[1].mousePressed(deleteObjects);
-      text("Will automatically move on after 5 minutes.\nFor demo purposes, there is no time limit \nand pressing the button resets the program\n to the kinematics animation, rather than continuing to \ndynamics. This will be changed in the \nfull program.", 650, 650);
+      text("Will automatically move on after 5 minutes.", 650, 650);
       text("X Velocity (m/s): ", 60, 590);
       text("Y Velocity (m/s): ", 60, 640);
       text("X Acceleration (m/s²): ", 60, 690);
@@ -100,9 +100,32 @@ function kinematics() {
     text("Newton's First Law: An object will maintain its velocity if the forces are balanced.\nThis box has forces acting on it, but they cancel out and cause the box to maintain its 0 m/s velocity.\nNote: The arrows show acceleration in m/s²",400,200);
     if (newBall === true) {
       objects.push(new Box(400,400,0,0,[createVector(10,10), createVector(0,-10), createVector(-10,0)],5));
-      threshold = 3e5;
+      threshold = 7000;
       newBall = false;
     }
+  } else if (stage === 7) {
+    text("The same applies for this object, which has all its forces balanced so it maintains its constant 10 m/s velocity.",400,200);
+    if (newBall === true) {
+      objects.push(new Box(400,400,0,10,[createVector(10,10), createVector(0,-10), createVector(-10,0)],5));
+      threshold = 4000;
+      newBall = false;
+    }
+  } else if (stage === 8) {
+    text("Newton's Second Law: The force on an object is equal to the product of mass and acceleration. (F = ma)\nWith the knowledge that this box has a 20N force on it, accelerating it at 4 m/s², you can calculate the mass.",400,200);
+    if (newBall === true) {
+      objects.push(new Box(400,400,0,0,[createVector(4,0)],5));
+      threshold = 7000;
+      newBall = false;
+    }
+  } else if (stage === 9) {
+    text("Newton's Third Law: Every force has an equal and opposite reaction force.\nIn this instant, the right box is being pushed against the left box, which is pinned in place. The right box exerts a force on the left, and the right box exerts a force \non the right of equal magnitude. For simplicity purposes, only the forces on the right box are shown.",400,200);
+    if (newBall === true) {
+      objects.push(new Box(350,400,0,0,[],5));
+      objects.push(new Box(450,400,0,0,[createVector(10,0), createVector(-10,0)],5));
+      threshold = 10000;
+      newBall = false;
+    }
+  } else if (stage === 10) {
 
   }
 }
@@ -128,9 +151,6 @@ function stageProgress() {
   buttons = [];
   timer1 = millis();
   newBall = true;
-  if (stage === 6) {
-    stage = 1;
-  }
 }
 
 function deleteObjects() {

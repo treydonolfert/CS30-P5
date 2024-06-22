@@ -20,7 +20,6 @@ function preload() { //to ensure loading is done
   for (let i = 1; i <= 6; i++) { //1,2,3,4,5,6
     gorillaIdle.push(loadImage("assets/Gorilla/idle"+i+".png"));
   }
-
   for (let i = 1; i <= 6; i++) {
     gorillaSwipe.push(loadImage("assets/Gorilla/swipe"+i+".png")); 
   }
