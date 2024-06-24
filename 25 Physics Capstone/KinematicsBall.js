@@ -6,7 +6,7 @@ class Ball {
         this.size = 100;
     }
 
-    move() { //adds acceleration to velocity, then velocity to acceleration. uses deltaTime for more accurate simulation.
+    move() { //adds acceleration to velocity, then velocity to position. uses deltaTime for more accurate simulation.
         this.vel.add(this.acc.x * (deltaTime / 1000), this.acc.y * (deltaTime / 1000));
         this.pos.add(this.vel.x * (deltaTime / 1000) * scale, this.vel.y * (deltaTime / 1000) * scale);
     }

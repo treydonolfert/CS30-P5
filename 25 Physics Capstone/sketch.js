@@ -38,7 +38,7 @@ function draw() { //first does movement and onscreen checks for every object, th
   animation();
 }
 
-function animation() { //the program uses a stage system. at certain time intervals, the animation switches to the next stage. most of the code here is pretty much identical to the last stage 
+function animation() { //the program uses a stage system. at certain time intervals, the animation switches to the next stage. most of the code here is pretty much identical to the last stage.
   timer2 = millis();
   if (timer2 - timer1 >= threshold) {
     stageProgress();
