@@ -45,7 +45,7 @@ function draw() { //gets the col and row that the mouse is nearest to, draws the
 }
 
 function mousePressed() {
-  //only do something if mouseX/mouseY are on the canvas
+  //only do something if mouseX/mouseY are on the canvas and if the game isn't won
   if (mouseX < width && mouseY < height && win === false) {
     flip(col, row); //flips current tile
     if (keyIsDown(SHIFT) === false) { //only flips any other tiles if shift isn't being held down
@@ -64,7 +64,7 @@ function mousePressed() {
 }
 
 function keyPressed() {
-  if (key === ' ') {
+  if (key === ' ' && win === false) {
     state = (state+1) % 2; //switches between cross and square flips
   }
 }
@@ -106,7 +106,7 @@ function drawOverlay() { //overlay drawn using the 4th fill() parameter. the cod
 }
 
 function drawGrid() {
-  //read data from our 2d array (grid) and use the numbers to set the color for squares whcih are arranged in a grid fashion
+  //read data from our 2d array (grid) and use the numbers to set the color for squares which are arranged in a grid fashion
   for (let y = 0; y < NUM_ROWS; y++) {
     for (let x = 0; x < NUM_COLS; x++) {
       let fillValue = grid[y][x];
