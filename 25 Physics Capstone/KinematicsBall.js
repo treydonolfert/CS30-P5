@@ -6,18 +6,18 @@ class Ball {
         this.size = 100;
     }
 
-    move() {
+    move() { //adds acceleration to velocity, then velocity to acceleration. uses deltaTime for more accurate simulation.
         this.vel.add(this.acc.x * (deltaTime / 1000), this.acc.y * (deltaTime / 1000));
         this.pos.add(this.vel.x * (deltaTime / 1000) * scale, this.vel.y * (deltaTime / 1000) * scale);
     }
 
-    onScreen1() {
+    onScreen1() { //used for only the interactive kinematics section, where the balls get deleted when they leave the screen
         if (this.pos.x < -0.5 * this.size || this.pos.x > 800 + 0.5 * this.size || this.pos.y < -0.5 * this.size || this.pos.y > 800 + 0.5 * this.size) {
             return false;
         }
     }
 
-    onScreen2() {
+    onScreen2() { //used for almost the entire program, where the balls wrap around when they leave the screen
         if (this.pos.x > 800 + 0.5 * this.size) {
             this.pos.x = -0.5 * this.size + (this.pos.x-(800 + 0.5 * this.size));
         }
@@ -32,7 +32,7 @@ class Ball {
         }
     }
 
-    display() {
+    display() { //displays the ball and draws velocity vector component arrows
         circle(this.pos.x, this.pos.y, this.size);
         push();
         translate(this.pos.x, this.pos.y);
